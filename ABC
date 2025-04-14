@@ -1,0 +1,593 @@
+1) Relationship Between Objects, Classes, Data Members, and Methods
+Question:
+A university is developing a student management system where each student has attributes like name, roll number, and courses enrolled. The system needs to allow students to perform actions such as enrolling in courses and checking grades.
+Explain the relationship between objects, classes, data members, and methods in OOP with reference to this system.
+
+Answer:
+
+Class defines the blueprint.
+
+Object is an instance of the class.
+
+Data Members hold object attributes.
+
+Methods define object behaviors.
+
+C++ Example:
+
+cpp
+
+class Student {
+public:
+    string name;
+    int rollNo;
+    vector<string> courses;
+
+    void enroll(string course) {
+        courses.push_back(course);
+    }
+
+    void display() {
+        cout << "Name: " << name << ", Roll: " << rollNo << "\nCourses:\n";
+        for (string c : courses) cout << "- " << c << endl;
+    }
+};
+2) Private vs Protected Access Modifiers
+Question:
+How does the private modifier differ from the protected modifier in OOP, and how can they be used to implement data security in an employee management system?
+
+Answer:
+
+Private: Accessible only within the class. Used to hide sensitive data (e.g., salary).
+
+Protected: Accessible within class and derived classes. Allows controlled access for HR functionality.
+
+C++ Example:
+
+cpp
+
+class Employee {
+private:
+    double salary;
+protected:
+    string bankDetails;
+public:
+    string name;
+    void setSalary(double s) { salary = s; }
+    double getSalary() { return salary; }
+};
+
+class HR : public Employee {
+public:
+    void showDetails() {
+        cout << "Accessing bank: " << bankDetails << endl;
+    }
+};
+3) Compile-Time vs Run-Time Polymorphism
+Question:
+An e-commerce application applies different discount types.
+Explain the difference between compile-time and run-time polymorphism using applyDiscount().
+
+Answer:
+
+Compile-Time (Method Overloading): Same function name with different parameters.
+
+Run-Time (Method Overriding): Derived class redefines base class method.
+
+C++ Example:
+
+cpp
+
+class Coupon {
+public:
+    virtual void applyDiscount() {
+        cout << "Base discount applied.\n";
+    }
+};
+
+class FlatCoupon : public Coupon {
+public:
+    void applyDiscount() override {
+        cout << "Flat discount applied.\n";
+    }
+};
+
+class PercentageCoupon : public Coupon {
+public:
+    void applyDiscount() override {
+        cout << "Percentage discount applied.\n";
+    }
+};
+4) Abstract Class for Vehicle Rental
+Question:
+A vehicle rental service has different pricing based on vehicle type.
+How would each vehicle type implement an abstract method calculate_rental_price()?
+
+Answer: Use an abstract base class (pure virtual function).
+
+C++ Example:
+
+cpp
+
+class Vehicle {
+public:
+    virtual double calculateRentalPrice() = 0;
+};
+
+class Car : public Vehicle {
+public:
+    double calculateRentalPrice() override {
+        return 1000;
+    }
+};
+
+class Truck : public Vehicle {
+public:
+    double calculateRentalPrice() override {
+        return 1500 + 300; // extra weight charge
+    }
+};
+
+class Motorcycle : public Vehicle {
+public:
+    double calculateRentalPrice() override {
+        return 500 + 200; // based on mileage
+    }
+};
+5) Handling Multiple Exceptions in Java
+Question:
+How can multiple exceptions like InsufficientFundsException and NetworkFailureException be handled in Java?
+
+Answer: Use multiple catch blocks or a combined catch.
+
+java
+
+try {
+    // transaction code
+} catch (InsufficientFundsException e) {
+    System.out.println("Not enough balance.");
+} catch (InvalidAccountException e) {
+    System.out.println("Invalid account.");
+} catch (Exception e) {
+    System.out.println("Some other error occurred.");
+}
+6) Fix the Interface Implementation Error
+Question:
+Fix the Java code where Dog implements two interfaces (Animal, Cat).
+
+Corrected Code:
+
+java
+
+interface Animal {
+    void makeSound();
+}
+
+interface Cat {
+    void purr();
+}
+
+class Dog implements Animal, Cat {
+    public void makeSound() {
+        System.out.println("Dog barks!");
+    }
+
+    public void purr() {
+        System.out.println("Dog cannot purr, but method must be implemented!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.makeSound();
+        dog.purr();
+    }
+}
+7) Checked vs Unchecked Exceptions
+Question:
+Differentiate between checked and unchecked exceptions in Java using a flight booking system.
+
+Answer:
+
+Checked: Handled at compile time (e.g., IOException).
+
+Unchecked: Occurs at runtime (e.g., ArithmeticException).
+
+java
+
+if (age < 0) {
+    throw new IllegalArgumentException("Age cannot be negative"); // Unchecked
+}
+
+try {
+    // some code requiring I/O
+} catch (IOException e) {
+    System.out.println("Input error"); // Checked
+}
+8) What If No Catch Block Exists?
+Question:
+What happens if an exception occurs without a catch block?
+
+Answer: The program crashes, and the JVM prints a stack trace. The remaining code does not execute unless the exception is handled.
+
+9) Method vs Constructor
+Question:
+Differentiate between method and constructor in OOP with reference to employee attendance system.
+
+Answer:
+
+Constructor: Initializes an object.
+
+Method: Performs an action.
+
+C++ Example:
+
+cpp
+
+class Employee {
+public:
+    int id;
+    string loginTime;
+
+    Employee(int i, string t) {  // Constructor
+        id = i;
+        loginTime = t;
+    }
+
+    void display() {  // Method
+        cout << "ID: " << id << ", Login: " << loginTime << endl;
+    }
+};
+10) Getter and Setter for Encapsulation
+Question:
+Explain how getters and setters help with encapsulation in a bank app.
+
+C++ Example:
+
+cpp
+
+class Account {
+private:
+    double balance;
+
+public:
+    void setBalance(double b) {
+        if (b >= 0)
+            balance = b;
+    }
+
+    double getBalance() {
+        return balance;
+    }
+};
+Answer:
+Getters and setters restrict direct access to data, protecting it from invalid or unauthorized changes.
+
+11) "Is-a" and "Has-a" Relationship
+Question:
+Describe the "is-a" and "has-a" relationships in OOP using the university staff example.
+
+Answer:
+
+"Is-a": Professor is an Employee (Inheritance).
+
+"Has-a": Department has Professors (Composition).
+
+C++ Example:
+
+cpp
+
+class Employee {
+public:
+    string name;
+};
+
+class Professor : public Employee {
+public:
+    string subject;
+};
+
+class Department {
+public:
+    vector<Professor> profs;
+};
+12) C++ vs Java: Interface Implementation
+Question:
+Why doesn't C++ need interface and implements like Java?
+
+Answer: C++ uses abstract classes with pure virtual functions for the same purpose.
+
+C++ Example:
+
+cpp
+
+class Animal {
+public:
+    virtual void sound() = 0; // Pure virtual
+};
+
+class Dog : public Animal {
+public:
+    void sound() override {
+        cout << "Dog barks\n";
+    }
+};
+13) Encapsulation vs Abstraction in Privacy Design
+Question:
+Explain the difference between encapsulation and abstraction in OOP and how to apply them in a social media app.
+
+Answer:
+
+Encapsulation: Hides data inside classes using access modifiers.
+
+Abstraction: Shows only relevant details and hides implementation.
+
+C++ Example:
+
+
+class UserProfile {
+private:
+    string email, contactNumber;
+
+public:
+    string username, profilePic;
+
+    void setEmail(string e) { email = e; }
+    string getEmail() { return "Hidden"; } // Controlled access
+
+    void displayPublicInfo() {
+        cout << "Username: " << username << ", Pic: " << profilePic << endl;
+    }
+};
+
+
+
+14) Student Information System File Handling in C++
+
+Question: A student information system needs to store student records in a file. 
+
+It should allow reading student details when needed and updating them efficiently. Explain how to read and write files in C++ using fstream.
+
+ Provide an example.
+
+
+Answer: In C++, file handling is done using the <fstream> library. ofstream is used to write to files, ifstream is 
+
+used to read from files, and fstream can be used for both.
+
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int rollNo;
+
+    void getDetails() {
+        cout << "Enter Name: ";
+        cin >> name;
+        cout << "Enter Roll No: ";
+        cin >> rollNo;
+    }
+
+    void saveToFile() {
+        ofstream fout("students.txt", ios::app);
+        fout << name << " " << rollNo << endl;
+        fout.close();
+    }
+
+    void readFromFile() {
+        ifstream fin("students.txt");
+        string n;
+        int r;
+        while (fin >> n >> r) {
+            cout << "Name: " << n << ", Roll No: " << r << endl;
+        }
+        fin.close();
+    }
+};
+
+int main() {
+    Student s;
+    s.getDetails();
+    s.saveToFile();
+    s.readFromFile();
+    return 0;
+}
+
+
+15) Identify and Fix the Error in the Given Code
+
+public class ExceptionExample {
+ public static void main(String[] args) {
+  try {
+   int num = 5 / 0;
+  }
+  catch () {
+   System.out.println("Cannot divide by zero");
+  }
+ }
+}
+
+Fixed Code:
+
+public class ExceptionExample {
+ public static void main(String[] args) {
+  try {
+   int num = 5 / 0;
+  }
+  catch (ArithmeticException e) {
+   System.out.println("Cannot divide by zero");
+  }
+ }
+}
+
+Explanation: The catch block must specify the exception type, like ArithmeticException.
+
+
+
+16) Multiple Exceptions in Payment Gateway
+
+Question: How can multiple exceptions be handled in Java to make sure the payment gateway runs without failure? Provide a suitable example.
+
+
+Answer: Use multiple catch blocks or a multi-catch block to handle different exceptions.
+
+
+try {
+    // Code that may throw exceptions
+    processTransaction();
+} catch (InsufficientBalanceException | InvalidCardException | TransactionTimeoutException e) {
+    System.out.println("Transaction error: " + e.getMessage());
+}
+
+
+17) Class vs Object in Hospital Management System
+
+Question: What is the difference between a Class and an Object in OOP? Explain using this hospital management system as an example.
+
+
+Answer:
+
+A class is a blueprint. For example, class Patient defines attributes like id, name, and history.
+
+
+An object is an instance of the class. For example, Patient p1; creates an object
+
+class Patient {
+public:
+    int id;
+    string name, history;
+};
+
+Patient p1; // Object of class Patient
+18) Access Modifiers Table and Role-Based Access
+Question: Create a comparison table of access modifiers and explain how they can be used in a role-based access system.
+
+Answer:
+
+
+Modifier	Access Level	Use Case in Access Control
+private	  Accessible only within class	Salary, bank details
+protected   	Accessible in class and subclasses	Internal HR tools
+public	Accessible from anywhere	Name, department
+default      	Accessible within same package (Java)    	Internal system methods
+
+
+19) Interface in C++ vs Java
+
+Question: Why does C++ not require the interface or implements keyword like Java? Explain with a code example.
+
+Answer: In C++, interfaces are simulated using abstract classes with pure virtual functions.
+
+class SensorInterface {
+public:
+    virtual void readSensor() = 0; // Pure virtual function
+};
+
+class TemperatureSensor : public SensorInterface {
+public:
+    void readSensor() override {
+        cout << "Reading temperature sensor" << endl;
+    }
+};
+20) Use of super and this in School Management
+Question: How do the super and this keywords work in Java? Explain with reference to the school management system.
+
+Answer:
+
+super refers to the parent class
+
+
+this refers to the current class instance
+
+class Person {
+    String name;
+    void getDetails() {
+        System.out.println("Name: " + name);
+    }
+}
+
+class Student extends Person {
+    String course;
+    void getDetails() {
+        super.getDetails(); // Call parent method
+        System.out.println("Course: " + this.course);
+    }
+}
+21) Method Overloading for rent_vehicle()
+Question: How would you implement method overloading for a rent_vehicle() method to support different customer needs?
+
+Answer:
+
+class RentalSystem {
+public:
+    void rent_vehicle(string type) {
+        cout << "Renting a " << type << endl;
+    }
+
+    void rent_vehicle(string type, int days) {
+        cout << "Renting a " << type << " for " << days << " days" << endl;
+    }
+
+    void rent_vehicle(string type, int days, bool insurance) {
+        cout << "Renting a " << type << " for " << days << " days with " << (insurance ? "insurance" : "no insurance") << endl;
+    }
+};
+22) Exception Handling vs Error Handling in Banking
+Answer:
+
+Exception Handling: Deals with runtime problems (e.g., insufficient funds).
+
+
+Error Handling: Deals with system-level errors (e.g., memory overflow)
+
+In Java, exceptions can be caught using try-catch blocks, improving reliability.
+
+23) Identify and Fix the Error
+Original Code:
+
+class Student {
+ private int age = 20;
+}
+public class Main {
+ public static void main(String[] args) {
+  Student s = new Student();
+  System.out.println(s.age);
+ }
+}
+
+Fixed Code:
+
+
+class Student {
+ private int age = 20;
+ public int getAge() {
+     return age;
+ }
+}
+public class Main {
+ public static void main(String[] args) {
+  Student s = new Student();
+  System.out.println(s.getAge());
+ }
+}
+
+24) throw vs throws in Flight Booking
+Question: What is the difference between throw and throws in Java? Explain with reference to this flight booking system.
+
+Answer:
+
+throw is used to explicitly throw an exception.
+
+throws is used in method signature to declare that a method might throw an exception
+
+
+void validateSeat(int seat) throws InvalidSeatException {
+    if (seat < 0 || seat > 100) {
+        throw new InvalidSeatException("Invalid seat number");
+    }
+}
