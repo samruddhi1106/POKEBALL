@@ -1,593 +1,1364 @@
-1) Relationship Between Objects, Classes, Data Members, and Methods
-Question:
-A university is developing a student management system where each student has attributes like name, roll number, and courses enrolled. The system needs to allow students to perform actions such as enrolling in courses and checking grades.
-Explain the relationship between objects, classes, data members, and methods in OOP with reference to this system.
+1) Write a c++ code for implementation of stack push and pop operation. 
+#include <iostream> 
+using namespace std; 
+ 
+#define MAX 1000 
+ 
+int main() { 
+    int stack[MAX]; // Array to store our stack elements 
+    int top = -1;   // Top of stack, -1 means empty 
+     
+    // Let's test pushing some elements 
+    // Push 10 
+    if (top >= MAX - 1) { 
+        cout << "Stack overflow!"; // Stack is full 
+    } else { 
+        // If not full, add element on top 
+        stack[++top] = 10; 
+        cout << "10 pushed into stack\n"; 
+    } 
+     
+    // Push 20 
+    if (top >= MAX - 1) { 
+        cout << "Stack overflow!"; 
+    } else { 
+        stack[++top] = 20; 
+        cout << "20 pushed into stack\n"; 
+    } 
+     
+    // Push 30 
+    if (top >= MAX - 1) { 
+        cout << "Stack overflow!"; 
+    } else { 
+        stack[++top] = 30; 
+        cout << "30 pushed into stack\n"; 
+    } 
+     
+    // Now let's pop elements 
+    // Pop first element 
+    if (top < 0) { 
+        cout << "Stack underflow!"; // Nothing to pop 
+    } else { 
+        // If not empty, remove top element 
+        int x = stack[top--]; 
+        cout << x << " popped from stack\n"; 
+    } 
+     
+    // Pop second element 
+    if (top < 0) { 
+        cout << "Stack underflow!"; 
+    } else { 
+        int x = stack[top--]; 
+        cout << x << " popped from stack\n"; 
+    } 
+     
+    return 0; 
+} 
+ 
+ 
+2) Write a c++ code for balanced parentheses. 
+#include <iostream> 
+#include <string> 
+using namespace std; 
+ 
+int main() { 
+    string expr = "{[()]}"; 
+     
+    // Create a simple array-based stack 
+    char stack[100];  // Assuming max expression length is 100 
+    int top = -1;     // Initial stack position 
+    bool isBalanced = true; 
+     
+    // Traverse the expression 
+    for (int i = 0; i < expr.length(); i++) { 
+        // If current character is opening bracket, push to stack 
+        if (expr[i] == '(' || expr[i] == '{' || expr[i] == '[') { 
+            top++; 
+            stack[top] = expr[i]; 
+            continue; 
+        } 
+         
+        // If stack is empty, there's no matching opening bracket 
+        if (top == -1) { 
+            isBalanced = false; 
+            break; 
+        } 
+             
+        char check; 
+        if (expr[i] == ')') { 
+            // Pop from stack and check if it matches 
+            check = stack[top]; 
+            top--; 
+            if (check != '(') { 
+                isBalanced = false; 
+                break; 
+            } 
+        } 
+        else if (expr[i] == '}') { 
+            check = stack[top]; 
+            top--; 
+            if (check != '{') { 
+                isBalanced = false; 
+                break; 
+            } 
+        } 
+        else if (expr[i] == ']') { 
+            check = stack[top]; 
+            top--; 
+            if (check != '[') { 
+                isBalanced = false; 
+                break; 
+            } 
+        } 
+    } 
+     
+    // If stack is not empty, some opening brackets didn't get matched 
+    if (top != -1) 
+        isBalanced = false; 
+     
+    // Print result 
+    if (isBalanced) 
+        cout << "Balanced"; 
+    else 
+        cout << "Not Balanced"; 
+         
+    return 0; 
+} 
+ 
+ 
+3) Write a c++ code for implementing queue using two stacks. 
+#include <iostream> 
+using namespace std; 
+ 
+#define MAX 1000 
+ 
+int main() { 
+    // We'll need two stacks to implement our queue 
+    int s1[MAX], s2[MAX]; // Our two stacks 
+    int top1 = -1, top2 = -1; // Top pointers for each stack 
+     
+    // Let's add some items to our queue 
+    // Enqueue operation - simply push to first stack 
+     
+    // Enqueue 1 
+    s1[++top1] = 1; 
+    cout << "1 added to queue\n"; 
+     
+    // Enqueue 2 
+    s1[++top1] = 2; 
+    cout << "2 added to queue\n"; 
+     
+    // Enqueue 3 
+    s1[++top1] = 3; 
+    cout << "3 added to queue\n"; 
+     
+    // Now let's remove items (dequeue) 
+     
+    // Dequeue first item 
+    // If both stacks are empty, queue is empty 
+    if (top1 == -1 && top2 == -1) { 
+        cout << "Queue is empty!\n"; 
+    } else { 
+        // If s2 is empty, transfer all elements from s1 
+        if (top2 == -1) { 
+            // Move all items from s1 to s2 
+            while (top1 >= 0) { 
+                s2[++top2] = s1[top1--]; 
+            } 
+        } 
+         
+        // Get the front item from s2 
+        int x = s2[top2--]; 
+        cout << x << " removed from queue\n"; 
+    } 
+     
+    // Dequeue second item 
+    if (top1 == -1 && top2 == -1) { 
+        cout << "Queue is empty!\n"; 
+    } else { 
+        // If s2 is empty, transfer all elements from s1 
+        if (top2 == -1) { 
+            // Move all items from s1 to s2 
+            while (top1 >= 0) { 
+                s2[++top2] = s1[top1--]; 
+            } 
+        } 
+         
+        // Get the front item from s2 
+        int x = s2[top2--]; 
+        cout << x << " removed from queue\n"; 
+    } 
+     
+    // Enqueue 4 
+    s1[++top1] = 4; 
+    cout << "4 added to queue\n"; 
+     
+    // Dequeue third item 
+    if (top1 == -1 && top2 == -1) { 
+        cout << "Queue is empty!\n"; 
+    } else { 
+        // If s2 is empty, transfer all elements from s1 
+        if (top2 == -1) { 
+            // Move all items from s1 to s2 
+            while (top1 >= 0) { 
+                s2[++top2] = s1[top1--]; 
+            } 
+        } 
+         
+        // Get the front item from s2 
+        int x = s2[top2--]; 
+        cout << x << " removed from queue\n"; 
+    } 
+     
+    return 0; 
+} 
+ 
+ 
+4) Write a c++ code for implementing queue front and rear operation. 
+#include <iostream> 
+using namespace std; 
+ 
+#define MAX 1000 
+ 
+int main() { 
+    int queue[MAX]; // Array to hold our queue 
+    int front = 0;  // Index for the front item 
+    int rear = -1;  // Index for the rear item 
+    int size = 0;   // Current number of items 
+     
+    // Let's add some items to our queue 
+     
+    // Enqueue 10 
+    if (size == MAX) { 
+        cout << "Queue is full!\n"; 
+    } else { 
+        // Circular increment of rear 
+        rear = (rear + 1) % MAX; 
+        queue[rear] = 10; 
+        size++; 
+        cout << "10 added to queue\n"; 
+    } 
+     
+    // Enqueue 20 
+    if (size == MAX) { 
+        cout << "Queue is full!\n"; 
+    } else { 
+        rear = (rear + 1) % MAX; 
+        queue[rear] = 20; 
+        size++; 
+        cout << "20 added to queue\n"; 
+    } 
+     
+    // Enqueue 30 
+    if (size == MAX) { 
+        cout << "Queue is full!\n"; 
+    } else { 
+        rear = (rear + 1) % MAX; 
+        queue[rear] = 30; 
+        size++; 
+        cout << "30 added to queue\n"; 
+    } 
+     
+    // Let's check the front and rear elements 
+    if (size == 0) { 
+        cout << "Queue is empty!\n"; 
+    } else { 
+        cout << "Front element: " << queue[front] << endl; 
+        cout << "Rear element: " << queue[rear] << endl; 
+    } 
+     
+    // Now let's remove an item 
+    if (size == 0) { 
+        cout << "Queue is empty!\n"; 
+    } else { 
+        int item = queue[front]; 
+        // Circular increment of front 
+        front = (front + 1) % MAX; 
+        size--; 
+        cout << item << " removed\n"; 
+    } 
+     
+    // Check front again after removal 
+    if (size == 0) { 
+        cout << "Queue is empty!\n"; 
+    } else { 
+        cout << "Front element after dequeue: " << queue[front] << endl; 
+    } 
+     
+    return 0; 
+} 
+ 
+ 
+5) Write a c++ code for counting total number of nodes in linked list. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Let's create a simple linked list structure 
+    struct Node { 
+        int data; 
+        Node* next; 
+    }; 
+     
+    // Create nodes for our list 
+    Node* head = new Node(); 
+    Node* second = new Node(); 
+    Node* third = new Node(); 
+    Node* fourth = new Node(); 
+     
+    // Assign data values 
+    head->data = 1; 
+    second->data = 2; 
+    third->data = 3; 
+    fourth->data = 4; 
+     
+    // Connect nodes to form a linked list 
+    head->next = second; 
+    second->next = third; 
+    third->next = fourth; 
+    fourth->next = NULL; 
+     
+    // Now let's count the nodes 
+    int count = 0; 
+    Node* current = head; 
+     
+    // Traverse the linked list and count nodes 
+    while (current != NULL) { 
+        count++; 
+        current = current->next; 
+    } 
+     
+    // Print the result 
+    cout << "Number of nodes: " << count << endl; 
+     
+    // Clean up memory 
+    delete head; 
+    delete second; 
+    delete third; 
+    delete fourth; 
+     
+    return 0; 
+} 
+ 
+ 
+6) Write a c++ code for finding cycle in the linked list. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Let's create a simple linked list structure 
+    struct Node { 
+        int data; 
+        Node* next; 
+    }; 
+     
+    // Create nodes for our list 
+    Node* head = new Node(); 
+    Node* second = new Node(); 
+    Node* third = new Node(); 
+    Node* fourth = new Node(); 
+     
+    // Assign data values 
+    head->data = 1; 
+    second->data = 2; 
+    third->data = 3; 
+    fourth->data = 4; 
+     
+    // Connect nodes to form a linked list 
+    head->next = second; 
+    second->next = third; 
+    third->next = fourth; 
+    fourth->next = NULL;  // No cycle initially 
+     
+    // Let's check for cycle using Floyd's cycle-finding algorithm 
+    // Also known as "tortoise and hare" algorithm 
+     
+    // No cycle case 
+    Node* slow = head; 
+    Node* fast = head; 
+    bool hasCycle = false; 
+     
+    while (fast != NULL && fast->next != NULL) { 
+        slow = slow->next;          // Move one step 
+        fast = fast->next->next;    // Move two steps 
+         
+        // If they meet, we found a cycle 
+        if (slow == fast) { 
+            hasCycle = true; 
+            break; 
+        } 
+    } 
+     
+    // Print result for no cycle case 
+    cout << "Has cycle? " << (hasCycle ? "Yes" : "No") << endl; 
+     
+    // Now let's create a cycle and test again (4 points back to 2) 
+    fourth->next = second; 
+     
+    // Reset our pointers 
+    slow = head; 
+    fast = head; 
+    hasCycle = false; 
+     
+    // Check for cycle again 
+    while (fast != NULL && fast->next != NULL) { 
+        slow = slow->next; 
+        fast = fast->next->next; 
+         
+        if (slow == fast) { 
+            hasCycle = true; 
+            break; 
+        } 
+    } 
+     
+    // Print result for cycle case 
+    cout << "Has cycle after modification? " << (hasCycle ? "Yes" : "No") << endl; 
+     
+    // Note: In a real program, we would need to clean up memory differently 
+    // since we created a cycle. Here we're skipping that to keep code simple. 
+     
+    return 0; 
+} 
+ 
+ 
+7) Write a c++ code for reversing linked list. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Let's create a simple linked list structure 
+    struct Node { 
+        int data; 
+        Node* next; 
+    }; 
+     
+    // Create nodes for our list 
+    Node* head = new Node(); 
+    Node* second = new Node(); 
+    Node* third = new Node(); 
+    Node* fourth = new Node(); 
+     
+    // Assign data values 
+    head->data = 1; 
+    second->data = 2; 
+    third->data = 3; 
+    fourth->data = 4; 
+     
+    // Connect nodes to form a linked list 
+    head->next = second; 
+    second->next = third; 
+    third->next = fourth; 
+    fourth->next = NULL; 
+     
+    // Print original list 
+    cout << "Original list: "; 
+    Node* temp = head; 
+    while (temp != NULL) { 
+        cout << temp->data << " "; 
+        temp = temp->next; 
+    } 
+    cout << endl; 
+     
+    // Now let's reverse the list 
+    Node* prev = NULL;      // Previous node 
+    Node* current = head;   // Current node 
+    Node* next = NULL;      // Next node 
+     
+    // Traverse the list 
+    while (current != NULL) { 
+        // Save next node 
+        next = current->next; 
+         
+        // Reverse current node's pointer 
+        current->next = prev; 
+         
+        // Move pointers one position ahead 
+        prev = current; 
+        current = next; 
+    } 
+     
+    // New head is the previous last node 
+    head = prev; 
+     
+    // Print reversed list 
+    cout << "Reversed list: "; 
+    temp = head; 
+    while (temp != NULL) { 
+        cout << temp->data << " "; 
+        temp = temp->next; 
+    } 
+    cout << endl; 
+     
+    // Clean up memory 
+    current = head; 
+    while (current != NULL) { 
+        next = current->next; 
+        delete current; 
+        current = next; 
+    } 
+     
+    return 0; 
+} 
+ 
+8) Write a c++ code for implementing bubble sort. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Initialize an array to sort 
+    int arr[] = {64, 34, 25, 12, 22, 11, 90}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+     
+    // Print original array 
+    cout << "Original array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    // Bubble sort algorithm 
+    bool swapped; 
+     
+    // Traverse through all array elements 
+    for (int i = 0; i < n-1; i++) { 
+        swapped = false; 
+         
+        // Last i elements are already in place 
+        for (int j = 0; j < n-i-1; j++) { 
+            // If current element is greater than next element 
+            if (arr[j] > arr[j+1]) { 
+                // Swap them 
+                int temp = arr[j]; 
+                arr[j] = arr[j+1]; 
+                arr[j+1] = temp; 
+                swapped = true; 
+            } 
+        } 
+         
+        // If no swapping occurred in this pass, array is sorted 
+        if (swapped == false) 
+            break; 
+    } 
+     
+    // Print sorted array 
+    cout << "Sorted array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    return 0; 
+} 
+ 
+ 
+9) Write a c++ code for implementing selection sort. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Initialize an array to sort 
+    int arr[] = {64, 25, 12, 22, 11}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+     
+    // Print original array 
+    cout << "Original array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    // Selection sort algorithm 
+    // Traverse through all array elements 
+    for (int i = 0; i < n-1; i++) { 
+        // Find the minimum element in unsorted part 
+        int min_idx = i; 
+        for (int j = i+1; j < n; j++) { 
+            if (arr[j] < arr[min_idx]) 
+                min_idx = j; 
+        } 
+         
+        // Swap the found minimum element with the first element 
+        if (min_idx != i) { 
+            int temp = arr[min_idx]; 
+            arr[min_idx] = arr[i]; 
+            arr[i] = temp; 
+        } 
+    } 
+     
+    // Print sorted array 
+    cout << "Sorted array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    return 0; 
+} 
+ 
+ 
+10) Write a c++ code for implementing insertion sort. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Initialize an array to sort 
+    int arr[] = {12, 11, 13, 5, 6}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+     
+    // Print original array 
+    cout << "Original array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    // Insertion sort algorithm 
+    // Start from the second element 
+    for (int i = 1; i < n; i++) { 
+        // Element to be compared 
+        int key = arr[i]; 
+         
+        // Index of element before current 
+        int j = i - 1; 
+         
+        // Move elements greater than key to one position ahead 
+        while (j >= 0 && arr[j] > key) { 
+            arr[j + 1] = arr[j]; 
+            j = j - 1; 
+        } 
+         
+        // Place key at its correct position 
+        arr[j + 1] = key; 
+    } 
+     
+    // Print sorted array 
+    cout << "Sorted array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    return 0; 
+} 
+ 
+ 
+11) Write a c++ code for implementing quick sort. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Initialize an array to sort 
+    int arr[] = {10, 7, 8, 9, 1, 5}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+     
+    // Print original array 
+    cout << "Original array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    // Using a manual stack to implement non-recursive quicksort 
+    // This simulates the recursive calls 
+    int stack[n]; 
+    int top = -1; 
+     
+    // Push initial values of l and h to stack 
+    stack[++top] = 0;      // low 
+    stack[++top] = n - 1;  // high 
+     
+    // Keep popping from stack while it's not empty 
+    while (top >= 0) { 
+        // Pop h and l 
+        int high = stack[top--]; 
+        int low = stack[top--]; 
+         
+        // Partition the array 
+        // Select the rightmost element as pivot 
+        int pivot = arr[high]; 
+         
+        // Index of smaller element 
+        int i = (low - 1); 
+         
+        // Check each element against pivot 
+        for (int j = low; j <= high - 1; j++) { 
+            // If current element is smaller than pivot 
+            if (arr[j] < pivot) { 
+                i++; // increment index of smaller element 
+                // Swap elements 
+                int temp = arr[i]; 
+                arr[i] = arr[j]; 
+                arr[j] = temp; 
+            } 
+        } 
+         
+        // Swap pivot to its correct position 
+        int temp = arr[i + 1]; 
+        arr[i + 1] = arr[high]; 
+        arr[high] = temp; 
+         
+        int partitionIndex = i + 1; 
+         
+        // If there are elements on left side of pivot, 
+        // push left side to stack 
+        if (partitionIndex - 1 > low) { 
+            stack[++top] = low; 
+            stack[++top] = partitionIndex - 1; 
+        } 
+         
+        // If there are elements on right side of pivot, 
+        // push right side to stack 
+        if (partitionIndex + 1 < high) { 
+            stack[++top] = partitionIndex + 1; 
+            stack[++top] = high; 
+        } 
+    } 
+     
+    // Print sorted array 
+    cout << "Sorted array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    return 0; 
+} 
+ 
+ 
+12) Write a c++ code for implementing merge sort. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Initialize an array to sort 
+    int arr[] = {12, 11, 13, 5, 6, 7}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+     
+    // Print original array 
+    cout << "Original array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    // Merge sort is typically recursive, but we'll use an iterative approach 
+    // We'll sort subarrays of increasing size  
+    int temp[n]; // Temporary array for merging 
+     
+    // Start with size=1 subarrays and double the size in each iteration 
+    for (int size = 1; size < n; size = 2*size) { 
+        // Pick starting points of different subarrays of current size 
+        for (int leftStart = 0; leftStart < n-1; leftStart += 2*size) { 
+            // Find ending points of left and right subarrays 
+            int mid = min(leftStart + size - 1, n-1); 
+            int rightEnd = min(leftStart + 2*size - 1, n-1); 
+             
+            // Merge the subarrays 
+            int left = leftStart;      // Start index of left subarray 
+            int right = mid + 1;       // Start index of right subarray 
+            int k = leftStart;         // Initial index of temp array 
+             
+            // Merge the two subarrays into temp array 
+            while (left <= mid && right <= rightEnd) { 
+                if (arr[left] <= arr[right]) { 
+                    temp[k++] = arr[left++]; 
+                } 
+                else { 
+                    temp[k++] = arr[right++]; 
+                } 
+            } 
+             
+            // Copy remaining elements of left subarray 
+            while (left <= mid) { 
+                temp[k++] = arr[left++]; 
+            } 
+             
+            // Copy remaining elements of right subarray 
+            while (right <= rightEnd) { 
+                temp[k++] = arr[right++]; 
+            } 
+             
+            // Copy back from temp to original array 
+            for (int i = leftStart; i <= rightEnd; i++) { 
+                arr[i] = temp[i]; 
+            } 
+        } 
+    } 
+     
+    // Print sorted array 
+    cout << "Sorted array: "; 
+    for (int i = 0; i < n; i++) 
+        cout << arr[i] << " "; 
+    cout << endl; 
+     
+    return 0; 
+} 
+ 
+ 
+13) Write a c++ code for implementing linear search. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Initialize an array and value to search 
+    int arr[] = {2, 3, 4, 10, 40}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+    int x = 10; // Value to search 
+     
+    // Linear search algorithm 
+    int result = -1; // Initialize as not found 
+     
+    // Check each element one by one 
+    for (int i = 0; i < n; i++) { 
+        if (arr[i] == x) { 
+            result = i; // Save index if found 
+            break;      // Exit loop 
+        } 
+    } 
+     
+    // Print result 
+    if (result == -1) 
+        cout << "Element not found"; 
+    else 
+        cout << "Element found at index " << result; 
+         
+    return 0; 
+} 
+ 
+ 
+14) Write a c++ code for implementing binary search. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Initialize a sorted array and value to search 
+    int arr[] = {2, 3, 4, 10, 40}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+    int x = 10; // Value to search 
+     
+    // Binary search algorithm 
+    int result = -1; // Initialize as not found 
+    int left = 0;    // Left boundary 
+    int right = n-1; // Right boundary 
+     
+    while (left <= right) { 
+        // Find middle element 
+        int mid = left + (right - left) / 2; 
+         
+        // Check if x is at mid 
+        if (arr[mid] == x) { 
+            result = mid; 
+            break; 
+        } 
+             
+        // If x is greater, ignore left half 
+        if (arr[mid] < x) 
+            left = mid + 1; 
+             
+        // If x is smaller, ignore right half 
+        else 
+            right = mid - 1; 
+    } 
+     
+    // Print result 
+    if (result == -1) 
+        cout << "Element not found"; 
+    else 
+        cout << "Element found at index " << result; 
+         
+    return 0; 
+} 
+ 
+ 
+15) Write a c++ code for finding height of the BST. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Define a binary tree node 
+    struct Node { 
+        int data; 
+        Node* left; 
+        Node* right; 
+    }; 
+     
+    // Create a function to make a new node 
+    auto newNode = [](int data) -> Node* { 
+        Node* node = new Node(); 
+        node->data = data; 
+        node->left = NULL; 
+        node->right = NULL; 
+        return node; 
+    }; 
+     
+    // Create a sample BST 
+    Node* root = newNode(50); 
+    root->left = newNode(30); 
+    root->right = newNode(70); 
+    root->left->left = newNode(20); 
+    root->left->right = newNode(40); 
+    root->right->left = newNode(60); 
+    root->right->right = newNode(80); 
+     
+    // This is a special case where we need some recursion-like behavior 
+    // We'll use a manual stack to simulate the recursion for finding height 
+     
+    // We need to keep track of nodes along with their levels 
+    struct NodeWithHeight { 
+        Node* node; 
+        int height; 
+    }; 
+     
+    NodeWithHeight stack[100]; // Assuming stack size of 100 is enough 
+    int top = -1; 
+     
+    // Push root with height 1 
+    stack[++top] = {root, 1}; 
+    int maxHeight = 0; 
+     
+    // Process until stack is empty 
+    while (top >= 0) { 
+        // Pop top node and its height 
+        NodeWithHeight current = stack[top--]; 
+         
+        // Update max height if current height is greater 
+        if (current.height > maxHeight) 
+            maxHeight = current.height; 
+         
+        // Push children to stack with height+1 
+        if (current.node->right) 
+            stack[++top] = {current.node->right, current.height + 1}; 
+        if (current.node->left) 
+            stack[++top] = {current.node->left, current.height + 1}; 
+    } 
+     
+    cout << "Height of BST: " << maxHeight << endl; 
+     
+    // Clean up memory 
+    // Would ideally use another stack traversal to free all nodes 
+     
+    return 0; 
+} 
+ 
+ 
+16) Write a c++ code for counting total number of nodes in BST. 
+#include <iostream> 
+using namespace std; 
+ 
+int main() { 
+    // Define a binary tree node 
+    struct Node { 
+        int data; 
+        Node* left; 
+        Node* right; 
+    }; 
+     
+    // Create a function to make a new node 
+    auto newNode = [](int data) -> Node* { 
+        Node* node = new Node(); 
+        node->data = data; 
+        node->left = NULL; 
+        node->right = NULL; 
+        return node; 
+    }; 
+     
+    // Create a sample BST 
+    Node* root = newNode(50); 
+    root->left = newNode(30); 
+    root->right = newNode(70); 
+    root->left->left = newNode(20); 
+    root->left->right = newNode(40); 
+    root->right->left = newNode(60); 
+    root->right->right = newNode(80); 
+     
+    // Use a stack to count nodes (simulating recursion) 
+    Node* stack[100]; // Assuming stack size of 100 is enough 
+    int top = -1; 
+     
+    if (root != NULL) 
+        stack[++top] = root; 
+     
+    int count = 0; 
+     
+    // Process until stack is empty 
+    while (top >= 0) { 
+        // Pop top node 
+        Node* current = stack[top--]; 
+         
+        // Increment count 
+        count++; 
+         
+        // Push children to stack 
+        if (current->right) 
+            stack[++top] = current->right; 
+        if (current->left) 
+            stack[++top] = current->left; 
+    } 
+     
+    cout << "Total number of nodes in BST: " << count << endl; 
+     
+    // Clean up memory 
+    // Would ideally use another stack traversal to free all nodes 
+     
+    return 0; 
+} 
+ 
+ 
+17) Write a c++ code for implementing BFS. 
+#include <iostream> 
+#include <list> 
+#include <queue> 
+using namespace std; 
+ 
+int main() { 
+    // Define number of vertices 
+    int V = 4; 
+     
+    // Create adjacency lists 
+    list<int> *adj = new list<int>[V]; 
+     
+    // Add edges manually (equivalent to addEdge function) 
+    adj[0].push_back(1); 
+    adj[0].push_back(2); 
+    adj[1].push_back(2); 
+    adj[2].push_back(0); 
+    adj[2].push_back(3); 
+    adj[3].push_back(3); 
+     
+    // Define source vertex for BFS 
+    int s = 2; 
+     
+    cout << "BFS starting from vertex 2: "; 
+     
+    // BFS implementation 
+    // Mark all vertices as not visited 
+    bool *visited = new bool[V]; 
+    for (int i = 0; i < V; i++) 
+        visited[i] = false; 
+     
+    // Create a queue for BFS 
+    queue<int> q; 
+     
+    // Mark the current node as visited and enqueue it 
+    visited[s] = true; 
+    q.push(s); 
+     
+    // Variable to store dequeued vertex 
+    int current; 
+     
+    // BFS traversal loop 
+    while (!q.empty()) { 
+        // Dequeue a vertex from queue and print it 
+        current = q.front(); 
+        cout << current << " "; 
+        q.pop(); 
+         
+        // Get all adjacent vertices of the dequeued vertex 
+        // If an adjacent hasn't been visited, mark it visited and enqueue it 
+        for (list<int>::iterator i = adj[current].begin(); i != adj[current].end(); ++i) { 
+            if (!visited[*i]) { 
+                visited[*i] = true; 
+                q.push(*i); 
+            } 
+        } 
+    } 
+     
+    // Clean up memory 
+    delete[] visited; 
+    delete[] adj; 
+     
+    return 0; 
+} 
+ 
+ 
+ 
+18) Write a c++ code for implementing DFS.  
+#include <iostream> 
+#include <list> 
+using namespace std; 
+ 
+// Graph class 
+class Graph { 
+    int V; // Number of vertices 
+    list<int> *adj; // Adjacency list 
+     
+    // DFS helper function 
+    void DFSUtil(int v, bool visited[]) { 
+        // Mark the current node as visited and print it 
+        visited[v] = true; 
+        cout << v << " "; 
+         
+        // Recur for all the vertices adjacent to this vertex 
+        list<int>::iterator i; 
+        for (i = adj[v].begin(); i != adj[v].end(); ++i) 
+            if (!visited[*i]) 
+                DFSUtil(*i, visited); 
+    } 
+     
+public: 
+    // Constructor 
+    Graph(int V) { 
+        this->V = V; 
+        adj = new list<int>[V]; 
+    } 
+     
+    // Add an edge to the graph 
+    void addEdge(int v, int w) { 
+        adj[v].push_back(w); // Add w to v's list 
+    } 
+     
+    // DFS traversal from a given vertex v 
+    void DFS(int v) { 
+        // Mark all the vertices as not visited 
+        bool *visited = new bool[V]; 
+        for (int i = 0; i < V; i++) 
+            visited[i] = false; 
+             
+        // Call the recursive helper function 
+        DFSUtil(v, visited); 
+    } 
+}; 
+ 
+// Main function to test DFS 
+int main() { 
+    // Create a graph 
+    Graph g(4); 
+    g.addEdge(0, 1); 
+    g.addEdge(0, 2); 
+    g.addEdge(1, 2); 
+    g.addEdge(2, 0); 
+    g.addEdge(2, 3); 
+    g.addEdge(3, 3); 
+     
+    cout << "DFS starting from vertex 2: "; 
+    g.DFS(2); 
+     
+    return 0; 
+} 
+ 
+ 
+19) Write a c++ code for implementing graph adjacency list and adjacency matrix. 
+#include <iostream> 
+#include <vector> 
+using namespace std; 
+ 
+// Graph class with both adjacency list and matrix 
+class Graph { 
+    int V; // Number of vertices 
+     
+    // Adjacency list 
+    vector<vector<int>> adjList; 
+     
+    // Adjacency matrix 
+    vector<vector<int>> adjMatrix; 
+     
+public: 
+    // Constructor 
+    Graph(int V) { 
+        this->V = V; 
+         
+        // Initialize adjacency list 
+        adjList.resize(V); 
+         
+        // Initialize adjacency matrix with zeros 
+        adjMatrix.resize(V, vector<int>(V, 0)); 
+    } 
+     
+    // Add an edge to the graph 
+    void addEdge(int u, int v) {
+ // Update adjacency list 
+        adjList[u].push_back(v); 
+         
+        // Update adjacency matrix 
+        adjMatrix[u][v] = 1; 
+    } 
+     
+    // Print adjacency list 
+    void printAdjList() { 
+        cout << "Adjacency List:" << endl; 
+        for (int i = 0; i < V; i++) { 
+            cout << i << " -> "; 
+            for (auto j: adjList[i]) 
+                cout << j << " "; 
+            cout << endl; 
+        } 
+    } 
+     
+    // Print adjacency matrix 
+    void printAdjMatrix() { 
+        cout << "Adjacency Matrix:" << endl; 
+        for (int i = 0; i < V; i++) { 
+            for (int j = 0; j < V; j++) 
+                cout << adjMatrix[i][j] << " "; 
+            cout << endl; 
+        } 
+    } 
+}; 
+ 
+// Main function to test graph representations 
+int main() { 
+    // Create a graph with 5 vertices 
+    Graph g(5); 
+     
+    // Add edges 
+    g.addEdge(0, 1); 
+    g.addEdge(0, 4); 
+    g.addEdge(1, 2); 
+    g.addEdge(1, 3); 
+    g.addEdge(1, 4); 
+    g.addEdge(2, 3); 
+    g.addEdge(3, 4); 
+     
+    // Print adjacency list and matrix 
+    g.printAdjList(); 
+    cout << endl; 
+    g.printAdjMatrix(); 
+     
+    return 0; 
+} 
+ 
+ 
+ 
+ 20) Write a c++ code to implement hash table. 
+#include <iostream> 
+#include <list> 
+#include <string> 
+using namespace std; 
+ 
+// Hash table class using chaining for collision handling 
+class HashTable { 
+    // Size of hash table 
+    int capacity; 
+     
+    // Pointer to an array of linked lists 
+    list<pair<string, int>> *table; 
+     
+public: 
+    // Constructor 
+    HashTable(int capacity) { 
+        this->capacity = capacity; 
+        table = new list<pair<string, int>>[capacity]; 
+    } 
+     
+    // Hash function to map keys to table index 
+    int hashFunction(string key) { 
+        int hash = 0; 
+        // Simple hash: sum ASCII values of characters 
+        for (char c : key) 
+            hash += c; 
+        return hash % capacity; 
+    } 
+     
+    // Insert a key-value pair into hash table 
+    void insert(string key, int value) { 
+        // Get index from hash function 
+        int index = hashFunction(key); 
+         
+        // Check if key already exists 
+        auto &cell = table[index]; 
+        auto it = begin(cell); 
+         
+        bool keyExists = false; 
+        while (it != end(cell)) { 
+            if (it->first == key) { 
+                // If key exists, update value 
+                keyExists = true; 
+                it->second = value; 
+                cout << "Updated key: " << key << endl; 
+                break; 
+            } 
+            it++; 
+        } 
+         
+        // If key doesn't exist, insert at the end 
+        if (!keyExists) { 
+            cell.emplace_back(key, value); 
+            cout << "Inserted key: " << key << endl; 
+        } 
+    } 
+     
+    // Remove a key from hash table 
+    void remove(string key) { 
+        // Get index from hash function 
+        int index = hashFunction(key); 
+         
+        // Check if key exists 
+        auto &cell = table[index]; 
+        auto it = begin(cell); 
+         
+        bool keyExists = false; 
+        while (it != end(cell)) { 
+            if (it->first == key) { 
+                // If key exists, remove it 
+                keyExists = true; 
+                it = cell.erase(it); 
+                cout << "Removed key: " << key << endl; 
+                break; 
+            } 
+            it++; 
+        } 
+         
+        // If key doesn't exist 
+        if (!keyExists) { 
+            cout << "Key not found: " << key << endl; 
+        } 
+    } 
+     
+    // Search for a key in hash table 
+    int get(string key) { 
+        // Get index from hash function 
+        int index = hashFunction(key); 
+         
+        // Check if key exists 
+        auto &cell = table[index]; 
+        auto it = begin(cell); 
+         
+        while (it != end(cell)) { 
+            if (it->first == key) { 
+                // If key exists, return value 
+                return it->second; 
+            } 
+            it++; 
+        } 
+         
+        // If key doesn't exist 
+        cout << "Key not found: " << key << endl; 
+        return -1; 
+    } 
+     
+    // Display the hash table 
+    void display() { 
+        for (int i = 0; i < capacity; i++) { 
+            cout << "Index " << i << ": "; 
+            for (auto it = table[i].begin(); it != table[i].end(); it++) { 
+                cout << "(" << it->first << ", " << it->second << ") "; 
+            } 
+            cout << endl; 
+        } 
+    } 
+}; 
+ 
+// Main function to test hash table 
+int main() { 
+    // Create a hash table with capacity 10 
+    HashTable ht(10); 
+     
+    // Insert some key-value pairs 
+    ht.insert("apple", 5); 
+    ht.insert("banana", 10); 
+    ht.insert("orange", 15); 
+    ht.insert("grape", 20); 
+     
+    // Display the hash table 
+    cout << "\nHash Table:" << endl; 
+    ht.display(); 
+     
+    // Search for keys 
+    cout << "\nValue for key 'apple': " << ht.get("apple") << endl; 
+    cout << "Value for key 'orange': " << ht.get("orange") << endl; 
+    cout << "Value for key 'mango': " << ht.get("mango") << endl; 
+     
+    // Update a key 
+    ht.insert("apple", 25); 
+     
+    // Remove a key 
+    ht.remove("banana"); 
+     
+    // Display the updated hash table 
+    cout << "\nUpdated Hash Table:" << endl; 
+    ht.display(); 
+     
+    return 0; 
+} 
 
-Answer:
-
-Class defines the blueprint.
-
-Object is an instance of the class.
-
-Data Members hold object attributes.
-
-Methods define object behaviors.
-
-C++ Example:
-
-cpp
-
-class Student {
-public:
-    string name;
-    int rollNo;
-    vector<string> courses;
-
-    void enroll(string course) {
-        courses.push_back(course);
-    }
-
-    void display() {
-        cout << "Name: " << name << ", Roll: " << rollNo << "\nCourses:\n";
-        for (string c : courses) cout << "- " << c << endl;
-    }
-};
-2) Private vs Protected Access Modifiers
-Question:
-How does the private modifier differ from the protected modifier in OOP, and how can they be used to implement data security in an employee management system?
-
-Answer:
-
-Private: Accessible only within the class. Used to hide sensitive data (e.g., salary).
-
-Protected: Accessible within class and derived classes. Allows controlled access for HR functionality.
-
-C++ Example:
-
-cpp
-
-class Employee {
-private:
-    double salary;
-protected:
-    string bankDetails;
-public:
-    string name;
-    void setSalary(double s) { salary = s; }
-    double getSalary() { return salary; }
-};
-
-class HR : public Employee {
-public:
-    void showDetails() {
-        cout << "Accessing bank: " << bankDetails << endl;
-    }
-};
-3) Compile-Time vs Run-Time Polymorphism
-Question:
-An e-commerce application applies different discount types.
-Explain the difference between compile-time and run-time polymorphism using applyDiscount().
-
-Answer:
-
-Compile-Time (Method Overloading): Same function name with different parameters.
-
-Run-Time (Method Overriding): Derived class redefines base class method.
-
-C++ Example:
-
-cpp
-
-class Coupon {
-public:
-    virtual void applyDiscount() {
-        cout << "Base discount applied.\n";
-    }
-};
-
-class FlatCoupon : public Coupon {
-public:
-    void applyDiscount() override {
-        cout << "Flat discount applied.\n";
-    }
-};
-
-class PercentageCoupon : public Coupon {
-public:
-    void applyDiscount() override {
-        cout << "Percentage discount applied.\n";
-    }
-};
-4) Abstract Class for Vehicle Rental
-Question:
-A vehicle rental service has different pricing based on vehicle type.
-How would each vehicle type implement an abstract method calculate_rental_price()?
-
-Answer: Use an abstract base class (pure virtual function).
-
-C++ Example:
-
-cpp
-
-class Vehicle {
-public:
-    virtual double calculateRentalPrice() = 0;
-};
-
-class Car : public Vehicle {
-public:
-    double calculateRentalPrice() override {
-        return 1000;
-    }
-};
-
-class Truck : public Vehicle {
-public:
-    double calculateRentalPrice() override {
-        return 1500 + 300; // extra weight charge
-    }
-};
-
-class Motorcycle : public Vehicle {
-public:
-    double calculateRentalPrice() override {
-        return 500 + 200; // based on mileage
-    }
-};
-5) Handling Multiple Exceptions in Java
-Question:
-How can multiple exceptions like InsufficientFundsException and NetworkFailureException be handled in Java?
-
-Answer: Use multiple catch blocks or a combined catch.
-
-java
-
-try {
-    // transaction code
-} catch (InsufficientFundsException e) {
-    System.out.println("Not enough balance.");
-} catch (InvalidAccountException e) {
-    System.out.println("Invalid account.");
-} catch (Exception e) {
-    System.out.println("Some other error occurred.");
-}
-6) Fix the Interface Implementation Error
-Question:
-Fix the Java code where Dog implements two interfaces (Animal, Cat).
-
-Corrected Code:
-
-java
-
-interface Animal {
-    void makeSound();
-}
-
-interface Cat {
-    void purr();
-}
-
-class Dog implements Animal, Cat {
-    public void makeSound() {
-        System.out.println("Dog barks!");
-    }
-
-    public void purr() {
-        System.out.println("Dog cannot purr, but method must be implemented!");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Dog dog = new Dog();
-        dog.makeSound();
-        dog.purr();
-    }
-}
-7) Checked vs Unchecked Exceptions
-Question:
-Differentiate between checked and unchecked exceptions in Java using a flight booking system.
-
-Answer:
-
-Checked: Handled at compile time (e.g., IOException).
-
-Unchecked: Occurs at runtime (e.g., ArithmeticException).
-
-java
-
-if (age < 0) {
-    throw new IllegalArgumentException("Age cannot be negative"); // Unchecked
-}
-
-try {
-    // some code requiring I/O
-} catch (IOException e) {
-    System.out.println("Input error"); // Checked
-}
-8) What If No Catch Block Exists?
-Question:
-What happens if an exception occurs without a catch block?
-
-Answer: The program crashes, and the JVM prints a stack trace. The remaining code does not execute unless the exception is handled.
-
-9) Method vs Constructor
-Question:
-Differentiate between method and constructor in OOP with reference to employee attendance system.
-
-Answer:
-
-Constructor: Initializes an object.
-
-Method: Performs an action.
-
-C++ Example:
-
-cpp
-
-class Employee {
-public:
-    int id;
-    string loginTime;
-
-    Employee(int i, string t) {  // Constructor
-        id = i;
-        loginTime = t;
-    }
-
-    void display() {  // Method
-        cout << "ID: " << id << ", Login: " << loginTime << endl;
-    }
-};
-10) Getter and Setter for Encapsulation
-Question:
-Explain how getters and setters help with encapsulation in a bank app.
-
-C++ Example:
-
-cpp
-
-class Account {
-private:
-    double balance;
-
-public:
-    void setBalance(double b) {
-        if (b >= 0)
-            balance = b;
-    }
-
-    double getBalance() {
-        return balance;
-    }
-};
-Answer:
-Getters and setters restrict direct access to data, protecting it from invalid or unauthorized changes.
-
-11) "Is-a" and "Has-a" Relationship
-Question:
-Describe the "is-a" and "has-a" relationships in OOP using the university staff example.
-
-Answer:
-
-"Is-a": Professor is an Employee (Inheritance).
-
-"Has-a": Department has Professors (Composition).
-
-C++ Example:
-
-cpp
-
-class Employee {
-public:
-    string name;
-};
-
-class Professor : public Employee {
-public:
-    string subject;
-};
-
-class Department {
-public:
-    vector<Professor> profs;
-};
-12) C++ vs Java: Interface Implementation
-Question:
-Why doesn't C++ need interface and implements like Java?
-
-Answer: C++ uses abstract classes with pure virtual functions for the same purpose.
-
-C++ Example:
-
-cpp
-
-class Animal {
-public:
-    virtual void sound() = 0; // Pure virtual
-};
-
-class Dog : public Animal {
-public:
-    void sound() override {
-        cout << "Dog barks\n";
-    }
-};
-13) Encapsulation vs Abstraction in Privacy Design
-Question:
-Explain the difference between encapsulation and abstraction in OOP and how to apply them in a social media app.
-
-Answer:
-
-Encapsulation: Hides data inside classes using access modifiers.
-
-Abstraction: Shows only relevant details and hides implementation.
-
-C++ Example:
-
-
-class UserProfile {
-private:
-    string email, contactNumber;
-
-public:
-    string username, profilePic;
-
-    void setEmail(string e) { email = e; }
-    string getEmail() { return "Hidden"; } // Controlled access
-
-    void displayPublicInfo() {
-        cout << "Username: " << username << ", Pic: " << profilePic << endl;
-    }
-};
-
-
-
-14) Student Information System File Handling in C++
-
-Question: A student information system needs to store student records in a file. 
-
-It should allow reading student details when needed and updating them efficiently. Explain how to read and write files in C++ using fstream.
-
- Provide an example.
-
-
-Answer: In C++, file handling is done using the <fstream> library. ofstream is used to write to files, ifstream is 
-
-used to read from files, and fstream can be used for both.
-
-
-#include <iostream>
-#include <fstream>
-using namespace std;
-
-class Student {
-public:
-    string name;
-    int rollNo;
-
-    void getDetails() {
-        cout << "Enter Name: ";
-        cin >> name;
-        cout << "Enter Roll No: ";
-        cin >> rollNo;
-    }
-
-    void saveToFile() {
-        ofstream fout("students.txt", ios::app);
-        fout << name << " " << rollNo << endl;
-        fout.close();
-    }
-
-    void readFromFile() {
-        ifstream fin("students.txt");
-        string n;
-        int r;
-        while (fin >> n >> r) {
-            cout << "Name: " << n << ", Roll No: " << r << endl;
-        }
-        fin.close();
-    }
-};
-
-int main() {
-    Student s;
-    s.getDetails();
-    s.saveToFile();
-    s.readFromFile();
-    return 0;
-}
-
-
-15) Identify and Fix the Error in the Given Code
-
-public class ExceptionExample {
- public static void main(String[] args) {
-  try {
-   int num = 5 / 0;
-  }
-  catch () {
-   System.out.println("Cannot divide by zero");
-  }
- }
-}
-
-Fixed Code:
-
-public class ExceptionExample {
- public static void main(String[] args) {
-  try {
-   int num = 5 / 0;
-  }
-  catch (ArithmeticException e) {
-   System.out.println("Cannot divide by zero");
-  }
- }
-}
-
-Explanation: The catch block must specify the exception type, like ArithmeticException.
-
-
-
-16) Multiple Exceptions in Payment Gateway
-
-Question: How can multiple exceptions be handled in Java to make sure the payment gateway runs without failure? Provide a suitable example.
-
-
-Answer: Use multiple catch blocks or a multi-catch block to handle different exceptions.
-
-
-try {
-    // Code that may throw exceptions
-    processTransaction();
-} catch (InsufficientBalanceException | InvalidCardException | TransactionTimeoutException e) {
-    System.out.println("Transaction error: " + e.getMessage());
-}
-
-
-17) Class vs Object in Hospital Management System
-
-Question: What is the difference between a Class and an Object in OOP? Explain using this hospital management system as an example.
-
-
-Answer:
-
-A class is a blueprint. For example, class Patient defines attributes like id, name, and history.
-
-
-An object is an instance of the class. For example, Patient p1; creates an object
-
-class Patient {
-public:
-    int id;
-    string name, history;
-};
-
-Patient p1; // Object of class Patient
-18) Access Modifiers Table and Role-Based Access
-Question: Create a comparison table of access modifiers and explain how they can be used in a role-based access system.
-
-Answer:
-
-
-Modifier	Access Level	Use Case in Access Control
-private	  Accessible only within class	Salary, bank details
-protected   	Accessible in class and subclasses	Internal HR tools
-public	Accessible from anywhere	Name, department
-default      	Accessible within same package (Java)    	Internal system methods
-
-
-19) Interface in C++ vs Java
-
-Question: Why does C++ not require the interface or implements keyword like Java? Explain with a code example.
-
-Answer: In C++, interfaces are simulated using abstract classes with pure virtual functions.
-
-class SensorInterface {
-public:
-    virtual void readSensor() = 0; // Pure virtual function
-};
-
-class TemperatureSensor : public SensorInterface {
-public:
-    void readSensor() override {
-        cout << "Reading temperature sensor" << endl;
-    }
-};
-20) Use of super and this in School Management
-Question: How do the super and this keywords work in Java? Explain with reference to the school management system.
-
-Answer:
-
-super refers to the parent class
-
-
-this refers to the current class instance
-
-class Person {
-    String name;
-    void getDetails() {
-        System.out.println("Name: " + name);
-    }
-}
-
-class Student extends Person {
-    String course;
-    void getDetails() {
-        super.getDetails(); // Call parent method
-        System.out.println("Course: " + this.course);
-    }
-}
-21) Method Overloading for rent_vehicle()
-Question: How would you implement method overloading for a rent_vehicle() method to support different customer needs?
-
-Answer:
-
-class RentalSystem {
-public:
-    void rent_vehicle(string type) {
-        cout << "Renting a " << type << endl;
-    }
-
-    void rent_vehicle(string type, int days) {
-        cout << "Renting a " << type << " for " << days << " days" << endl;
-    }
-
-    void rent_vehicle(string type, int days, bool insurance) {
-        cout << "Renting a " << type << " for " << days << " days with " << (insurance ? "insurance" : "no insurance") << endl;
-    }
-};
-22) Exception Handling vs Error Handling in Banking
-Answer:
-
-Exception Handling: Deals with runtime problems (e.g., insufficient funds).
-
-
-Error Handling: Deals with system-level errors (e.g., memory overflow)
-
-In Java, exceptions can be caught using try-catch blocks, improving reliability.
-
-23) Identify and Fix the Error
-Original Code:
-
-class Student {
- private int age = 20;
-}
-public class Main {
- public static void main(String[] args) {
-  Student s = new Student();
-  System.out.println(s.age);
- }
-}
-
-Fixed Code:
-
-
-class Student {
- private int age = 20;
- public int getAge() {
-     return age;
- }
-}
-public class Main {
- public static void main(String[] args) {
-  Student s = new Student();
-  System.out.println(s.getAge());
- }
-}
-
-24) throw vs throws in Flight Booking
-Question: What is the difference between throw and throws in Java? Explain with reference to this flight booking system.
-
-Answer:
-
-throw is used to explicitly throw an exception.
-
-throws is used in method signature to declare that a method might throw an exception
-
-
-void validateSeat(int seat) throws InvalidSeatException {
-    if (seat < 0 || seat > 100) {
-        throw new InvalidSeatException("Invalid seat number");
-    }
-}
