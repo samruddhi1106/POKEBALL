@@ -804,7 +804,7 @@ input:checked + label {
 }
 
 
-question 10 Glass Card with Image 
+uestion 10 Glass Card with Image 
 html
 
 <!DOCTYPE html>
@@ -929,4 +929,122 @@ button {
 
 button:hover {
   background: #fff;
+}
+
+
+
+question make a log in page                                              
+html                                             
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-box">
+    <h2>Login</h2>
+    <form>
+      <div class="input-box">
+        <input type="text" required>
+        <label>Username</label>
+      </div>
+      <div class="input-box">
+        <input type="password" required>
+        <label>Password</label>
+      </div>
+      <button type="submit">Login</button>
+      <div class="register-link">
+        <p>Don't have an account? <a href="#">Register</a></p>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+
+ css   
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(120deg, #2980b9, #8e44ad);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  width: 300px;
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.input-box label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.input-box input:focus {
+  border-color: #2980b9;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #3498db;
+}
+
+.register-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #2980b9;
+  text-decoration: none;
 }
